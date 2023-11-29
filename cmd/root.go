@@ -4,6 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -32,37 +33,23 @@ var rootCmd = &cobra.Command{
 		}
 		defer chip.Close()
 
-		song := []Song{
-			{659.25, 450 * time.Millisecond},
-			{493.88, 250 * time.Millisecond},
-			{523.25, 250 * time.Millisecond},
-			{587.33, 250 * time.Millisecond},
-			{523.25, 250 * time.Millisecond},
-			{493.88, 250 * time.Millisecond},
-			{440.00, 450 * time.Millisecond},
-			{440.00, 450 * time.Millisecond},
-			{523.25, 250 * time.Millisecond},
-			{659.25, 450 * time.Millisecond},
-			{587.33, 250 * time.Millisecond},
-			{523.25, 450 * time.Millisecond},
-			{493.88, 150 * time.Millisecond},
-			{523.25, 450 * time.Millisecond},
-			{587.33, 450 * time.Millisecond},
-			{659.25, 450 * time.Millisecond},
-			{523.25, 600 * time.Millisecond},
-			{440.00, 250 * time.Millisecond},
-			{440.00, 450 * time.Millisecond},
-		}
+		fmt.Println("CHIP:", chip)
 
-		line, err := chip.RequestLine(21, gpiod.AsOutput(0))
+		line, err := chip.RequestLine(4, gpiod.AsOutput(0))
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer line.Reconfigure(gpiod.AsInput)
 
-		for _, note := range song {
-			playTone(line, note.Frequency, note.Duration)
-		}
+		fmt.Println("LINE:", line)
+
+		line.SetValue(1)
+		time.Sleep(time.Second * 4)
+		line.SetValue(0)
+
+		// for _, note := range song {
+		// 	playTone(line, note.Frequency, note.Duration)
+		// }
 	},
 }
 
