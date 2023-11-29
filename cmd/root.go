@@ -33,7 +33,8 @@ var rootCmd = &cobra.Command{
 		}
 		defer chip.Close()
 
-		fmt.Println("CHIP:", chip)
+		fmt.Println("CHIP:")
+		fmt.Printf("%+v\n", chip)
 
 		line, err := chip.RequestLine(4, gpiod.AsOutput(0))
 		if err != nil {
@@ -41,7 +42,8 @@ var rootCmd = &cobra.Command{
 		}
 		defer line.Reconfigure(gpiod.AsInput)
 
-		fmt.Println("LINE:", line)
+		fmt.Println("LINE:")
+		fmt.Printf("%+v\n", line)
 
 		line.SetValue(1)
 		time.Sleep(time.Second * 4)
@@ -49,6 +51,7 @@ var rootCmd = &cobra.Command{
 
 		chip.RequestLine(18, gpiod.WithEventHandler(handler), gpiod.WithBothEdges)
 
+		time.Sleep(time.Second * 60)
 		// for _, note := range song {
 		// 	playTone(line, note.Frequency, note.Duration)
 		// }
@@ -56,7 +59,8 @@ var rootCmd = &cobra.Command{
 }
 
 func handler(evt gpiod.LineEvent) {
-	fmt.Println("EVENT:", evt)
+	fmt.Println("EVENT:")
+	fmt.Printf("%+v\n", evt)
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
