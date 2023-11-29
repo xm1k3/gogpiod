@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/spf13/cobra v1.8.0
-	github.com/warthog618/gpiod v0.8.1
+	github.com/warthog618/gpiod v0.8.2
 )
 
 require (
