@@ -47,10 +47,16 @@ var rootCmd = &cobra.Command{
 		time.Sleep(time.Second * 4)
 		line.SetValue(0)
 
+		chip.RequestLine(18, gpiod.WithEventHandler(handler), gpiod.WithBothEdges)
+
 		// for _, note := range song {
 		// 	playTone(line, note.Frequency, note.Duration)
 		// }
 	},
+}
+
+func handler(evt gpiod.LineEvent) {
+	fmt.Println("EVENT:", evt)
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
